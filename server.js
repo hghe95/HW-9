@@ -1,21 +1,17 @@
+// Dependencies
 const express = require(`express`);
-const PORT = process.env.PORT || 3001;
-const app = express();
 require(`./routes/routes`)(app);
 
+// Localhost and app initializer
+const PORT = process.env.PORT || 3001;
+const app = express();
+
+// Middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static(`public`));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/notes.html'));
-});
-
-
+// Listener
 app.listen(PORT, () => {
-    console.log(`localhost${PORT}`);
+    console.log(`App is now listening at localhost${PORT}`);
 });
