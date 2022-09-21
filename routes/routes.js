@@ -1,7 +1,9 @@
 const fs = require(`fs`);
 const path = require(`path`);
+const uuid = require(`uuid`);
 
 module.exports = app => {
+    //html routes
     app.get(`*`, (req, res) => {
         res.sendFile(path.join(__dirname, `../public/index.html`));
     });
@@ -10,7 +12,18 @@ module.exports = app => {
         res.sendFile(path.join(__dirname, `../public/notes.html`))
     });
 
-    function updateDB() {
-        fs.writeFile(`db.json`, JSON.stringify(notes))
-    }
+    //api routes
+    app.get(`/api/notes`, (req, res) => {
+        let data = JSON.parse(fs.readFileSync(`./db/db.json`, "utf8"));
+        res.json(data);
+    })
+
+    app.post(`/api/notes`, (req, res) => {
+        const newNote = req.body;
+        newNote.id = uuid();
+        let data = JSON.parse(fs.readFileSync(`./db/db.json`, "utf8"));
+        data.push(newNote);
+        fs.writeFileSync(`./db/db.json`, JSON.stringify(data));
+        res.json(data);
+    });
 }
