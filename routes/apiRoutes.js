@@ -1,18 +1,16 @@
-const fs = require(`fs`);
+const express = require(`express`);
+const router = express.Router();
 const uuid = require(`uuid`);
+let data = require(`./db/db.json`);
 
-module.exports = app => {
-    app.get(`/api/notes`, (req, res) => {
-        let data = JSON.parse(fs.readFileSync(`./db/db.json`, "utf8"));
-        res.json(data);
-    })
+app.get(`/api/notes`, (req, res) => res.json(data));
 
-    app.post(`/api/notes`, (req, res) => {
-        const newNote = req.body;
-        newNote.id = uuid();
-        let data = JSON.parse(fs.readFileSync(`./db/db.json`, "utf8"));
-        data.push(newNote);
-        fs.writeFileSync(`./db/db.json`, JSON.stringify(data));
-        res.json(data);
-    });
-}
+app.post(`/api/notes`, (req, res) => {
+    const title = req.body.title;
+    const text = req.body.text;
+    const file = { id: uuid.v4(), title: title, text: text };
+    data.push(file);
+    res.json(file);
+});
+
+module.exports = router;
