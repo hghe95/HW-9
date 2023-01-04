@@ -25,8 +25,8 @@ Anyone can contribute
 In the local host, try making a note and saving it. Or use the deployedd Heroku app
 
   ## Questions
-If you have any questions, please contact me using the links below: /
-Github: https://github.com/hghe95 /
+If you have any questions, please contact me using the links below: \
+Github: https://github.com/hghe95 \
 Email: hghe95@gmail.com 
 
 Heroku App: https://quiet-wave-84046.herokuapp.com/
